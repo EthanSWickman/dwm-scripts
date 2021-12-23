@@ -5,8 +5,8 @@
 
 #include "time_status.h"
 
-void SetTimeString(char** timeString) {
+void SetTimeString(char* timeString) {
   time_t currTime; 
   time(&currTime);
-  *timeString = ctime(&currTime);
+  strcpy(timeString, ctime(&currTime));
 }

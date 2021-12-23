@@ -1,6 +1,6 @@
 #ifndef BATTERYSTATUS_H
 #define BATTERYSTATUS_H
 
-void SetBatteryString(char**);
+void SetBatteryString(char*);
 
 #endif

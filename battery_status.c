@@ -3,34 +3,31 @@
 
 #include "battery_status.h"
 
-void SetBatteryString(char** batteryString) {
-  /* FILE* openFile = fopen("/sys/class/power_supply/BAT0/capacity","r");
+void SetBatteryString(char* batteryString) {
+  FILE* openFile = fopen("/sys/class/power_supply/BAT0/capacity","r");
   
-  char* battPercentage;
+  char battPercentage[4];
 
   fgets(battPercentage, 3, openFile);
 
   fclose(openFile);
 
-  while (strlen(battPercentage) < 3) {
-    battPercentage = strcat(" ", battPercentage);
-  }
-
   openFile = fopen("/sys/class/power_supply/BAT0/status", "r");
 
   int battStatus = fgetc(openFile);
 
+  fclose(openFile); 
+
   if (battStatus = 'C') {
-    *batteryString = strcat(battPercentage, "+");
+    strcat(battPercentage, "+");
   }
   else if (battStatus = 'D') {
-    *batteryString = strcat(battPercentage, "-");
+    strcat(battPercentage, "-");
   }
   else {
-    *batteryString = strcat(battPercentage, "*");
+    strcat(battPercentage, "*");
   }
-  
-  fclose(openFile); */
 
-  // *batteryString = "100+";
+  strcpy(batteryString, battPercentage);
+  
 } 

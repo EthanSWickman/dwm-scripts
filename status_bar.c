@@ -28,23 +28,23 @@ void SetStatus(char* status) {
   XSync(dpy, 0);
 }
 
-void UpdateStatusString(char statusString[STATUS_MAX_SIZE], char** sourceString, int startIndex) {
-  for (int i = 0; i < strlen(*sourceString); i++) {
-    statusString[startIndex + i] = (*sourceString)[i];
+void UpdateStatusString(char statusString[STATUS_MAX_SIZE], char* sourceString, int startIndex) {
+  for (int i = 0; i < strlen(sourceString); i++) {
+    statusString[startIndex + i] = (sourceString)[i];
   }
 }
 
-int main() {  
+int main() { 
   dpy = XOpenDisplay(NULL);
 
   /* 25 characters */
-  char* timeString;
+  char timeString[25];
   /* 1 spacer */
   /* 3 characters maximum */
-  char* updatesString;
+  char updatesString[3];
   /* 1 spacer */
   /* 4 characters maximum */
-  char* batteryString;
+  char batteryString[4];
   /* 1 spacer */
   
   int timeCounter = 0;
@@ -55,12 +55,12 @@ int main() {
   }
 
   for (;;sleep(1)) {
-    SetTimeString(&timeString);
-    UpdateStatusString(statusString, &timeString, 0);
+    SetTimeString(timeString);
+    UpdateStatusString(statusString, timeString, 0);
 
     if (timeCounter % 500 == 0) {
-      SetUpdatesString(&updatesString);
-      UpdateStatusString(statusString, &updatesString, 26);
+      SetUpdatesString(updatesString);
+      UpdateStatusString(statusString, updatesString, 26);
     }
 
     if (timeCounter % 10 == 0) { 
