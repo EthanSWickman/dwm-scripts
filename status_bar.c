@@ -9,7 +9,7 @@
 #include "time_status.h"
 #include "updates_status.h"
 
-#define STATUS_MAX_SIZE 80
+#define STATUS_MAX_SIZE 29 
 
 Display* dpy;
 
@@ -18,7 +18,6 @@ Display* dpy;
 
   0-24 DATE
   25 SPACER
-  26-28 UPDATES
   29 SPACER
   30-33 BATTERY STATUS
 
@@ -37,40 +36,50 @@ void UpdateStatusString(char statusString[STATUS_MAX_SIZE], char* sourceString, 
 int main() { 
   dpy = XOpenDisplay(NULL);
 
-  /* 25 characters */
-  char timeString[25];
+  /* 19 characters */
+  char timeString[20];
   /* 1 spacer */
   /* 3 characters maximum */
-  char updatesString[3];
+  char updatesString[4];
   /* 1 spacer */
   /* 4 characters maximum */
-  char batteryString[4];
-  /* 1 spacer */
+  char batteryString[5];
   
-  int timeCounter = 0;
+  int counter = 0;
 
   char statusString[STATUS_MAX_SIZE] = "";
-  for (int i = 0; i < STATUS_MAX_SIZE; i++) {
+  for (int i = 0; i < STATUS_MAX_SIZE - 1; i++) {
     statusString[i] = ' ';
   }
 
-  for (;;sleep(1)) {
+  while(1) {
     SetTimeString(timeString);
     UpdateStatusString(statusString, timeString, 0);
 
-    if (timeCounter % 500 == 0) {
+    if (counter % 3600 == 0) {
       SetUpdatesString(updatesString);
-      UpdateStatusString(statusString, updatesString, 26);
+      UpdateStatusString(statusString, updatesString, 20);
     }
 
-    if (timeCounter % 10 == 0) { 
-      SetBatteryString(&batteryString);
-      UpdateStatusString(statusString, &batteryString, 30);
+    if (counter % 10 == 0) { 
+      SetBatteryString(batteryString);
+      UpdateStatusString(statusString, batteryString, 24);
     }
+    for (int i = 0; i < strlen(statusString); i++) {
+      if (statusString[i] == '\n') {
+        printf("\\n-");
+      }
+      else {
+        printf("%c-", statusString[i]);
+      }
+    }
+    printf("\n");
 
     SetStatus(statusString);
 
-    timeCounter++;
+    counter++;
+
+    sleep(1);
   }
 
   XCloseDisplay(dpy);

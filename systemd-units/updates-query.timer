@@ -1,0 +1,12 @@
+# this timer is for updating the count of upgradeable packages for pacman
+
+[Unit]
+Decription=Logs the number of upgradeable packages to /home/USERNAME/monitors
+Requires=updates-query.service
+
+[Timer]
+Unit=updates-query.service
+OnCalendar=*-*-* *:00:00
+
+[Install]
+WantedBy=timers.target

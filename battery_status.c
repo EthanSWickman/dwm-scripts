@@ -8,7 +8,11 @@ void SetBatteryString(char* batteryString) {
   
   char battPercentage[4];
 
-  fgets(battPercentage, 3, openFile);
+  fgets(battPercentage, 4, openFile);
+
+  if (battPercentage[strlen(battPercentage) - 1] == '\n') {
+    battPercentage[strlen(battPercentage) - 1] = '\0';
+  }
 
   fclose(openFile);
 
@@ -18,10 +22,10 @@ void SetBatteryString(char* batteryString) {
 
   fclose(openFile); 
 
-  if (battStatus = 'C') {
+  if (battStatus == 'C') {
     strcat(battPercentage, "+");
   }
-  else if (battStatus = 'D') {
+  else if (battStatus == 'D') {
     strcat(battPercentage, "-");
   }
   else {
@@ -29,5 +33,4 @@ void SetBatteryString(char* batteryString) {
   }
 
   strcpy(batteryString, battPercentage);
-  
 } 

@@ -6,7 +6,10 @@
 #include "time_status.h"
 
 void SetTimeString(char* timeString) {
-  time_t currTime; 
-  time(&currTime);
-  strcpy(timeString, ctime(&currTime));
+  time_t rawTime; 
+  time(&rawTime);
+  struct tm* timeStruct = localtime(&rawTime);
+  char parsedTime[19];
+  strftime(parsedTime, 20, "%a %b %d %H:%M:%S", timeStruct);
+  strcpy(timeString, parsedTime);
 }

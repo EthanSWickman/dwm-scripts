@@ -11,6 +11,10 @@ void SetUpdatesString(char* updatesString) {
 
   fgets(numUpdates, 3, openFile);
  
+  if (numUpdates[strlen(numUpdates) - 1] == '\n') {
+    numUpdates[strlen(numUpdates) - 1] = '\0';
+  }
+
   fclose(openFile);
 
   strcpy(updatesString, numUpdates);
