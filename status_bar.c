@@ -9,17 +9,14 @@
 #include "time_status.h"
 #include "updates_status.h"
 
-#define STATUS_MAX_SIZE 29 
+#define STATUS_MAX_SIZE 108
 
 Display* dpy;
 
 /* THIS IS THE FORMAT OF THE STATUS BAR STRING AS OF NOW */
 /* 
 
-  0-24 DATE
-  25 SPACER
-  29 SPACER
-  30-33 BATTERY STATUS
+  | 🖴 000% | 🖥️ 000% 🌡️ 00° | ⬇️ 0000 ⬆️ 0000 | 🔔 0000 | FRI 00/00 00:00 | 🔊 000% 
 
  */
 void SetStatus(char* status) {
@@ -47,33 +44,22 @@ int main() {
   
   int counter = 0;
 
-  char statusString[STATUS_MAX_SIZE] = "";
-  for (int i = 0; i < STATUS_MAX_SIZE - 1; i++) {
-    statusString[i] = ' ';
-  }
-
   while(1) {
+    /* Update strings if necessary */ 
+
     SetTimeString(timeString);
-    UpdateStatusString(statusString, timeString, 0);
 
     if (counter % 3600 == 0) {
       SetUpdatesString(updatesString);
-      UpdateStatusString(statusString, updatesString, 20);
     }
 
     if (counter % 10 == 0) { 
       SetBatteryString(batteryString);
-      UpdateStatusString(statusString, batteryString, 24);
     }
-    for (int i = 0; i < strlen(statusString); i++) {
-      if (statusString[i] == '\n') {
-        printf("\\n-");
-      }
-      else {
-        printf("%c-", statusString[i]);
-      }
-    }
-    printf("\n");
+
+    char statusString[STATUS_MAX_SIZE];
+
+    sprintf(statusString, "| 🖴 000% | 🖥️ 000% 🌡️ 00° | ⬇️ 0000 ⬆️ 0000 | 🔔 0000 | FRI 00/00 00:00 | 🔊 000%%");
 
     SetStatus(statusString);
 
