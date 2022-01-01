@@ -8,8 +8,9 @@
 #include "battery_status.h"
 #include "time_status.h"
 #include "updates_status.h"
+#include "cpu_temp_status.h"
 
-#define STATUS_MAX_SIZE 108
+#define STATUS_MAX_SIZE 121
 
 Display* dpy;
 
@@ -33,21 +34,23 @@ void UpdateStatusString(char statusString[STATUS_MAX_SIZE], char* sourceString, 
 int main() { 
   dpy = XOpenDisplay(NULL);
 
-  /* 19 characters */
-  char timeString[20];
-  /* 1 spacer */
-  /* 3 characters maximum */
-  char updatesString[4];
-  /* 1 spacer */
+  /* 15 characters always */
+  char timeString[16];
+  /* 5 characters maximum */
+  char updatesString[6];
   /* 4 characters maximum */
   char batteryString[5];
-  
+  /* 2 characters always */
+  char cpuTempString[3];  
+
   int counter = 0;
 
   while(1) {
     /* Update strings if necessary */ 
 
     SetTimeString(timeString);
+
+    SetCpuTempString(cpuTempString);
 
     if (counter % 3600 == 0) {
       SetUpdatesString(updatesString);
@@ -59,7 +62,11 @@ int main() {
 
     char statusString[STATUS_MAX_SIZE];
 
-    sprintf(statusString, "| 🖴 000% | 🖥️ 000% 🌡️ 00° | ⬇️ 0000 ⬆️ 0000 | 🔔 0000 | FRI 00/00 00:00 | 🔊 000%%");
+    char* maxSizeStatus = "| 🖴 000% | 🖥️ 000% 🌡️ 00° | ⬇️ 0000 ⬆️ 0000 | 🔔 00000 | Fri 00/00 00:00 | 🔊 000% | 🔋 100%+";
+   /*  printf("%ld is the maximum status size\n", strlen(maxSizeStatus));
+    printf("%s\n", maxSizeStatus); */
+    /* memory, cpu use/temp, down/up, package upgrades, date/time, volume */
+    sprintf(statusString, "| 🖴 000%% | 🖥️ 000%% 🌡️ %s° | ⬇️ 0000 ⬆️ 0000 | 🔔 %s | %s | 🔊 000%% | 🔋 %s", cpuTempString, updatesString, timeString, batteryString);
 
     SetStatus(statusString);
 

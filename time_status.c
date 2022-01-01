@@ -9,7 +9,7 @@ void SetTimeString(char* timeString) {
   time_t rawTime; 
   time(&rawTime);
   struct tm* timeStruct = localtime(&rawTime);
-  char parsedTime[19];
-  strftime(parsedTime, 20, "%a %b %d %H:%M:%S", timeStruct);
+  char parsedTime[16];
+  strftime(parsedTime, 16, "%a %m/%d %H:%M", timeStruct);
   strcpy(timeString, parsedTime);
 }

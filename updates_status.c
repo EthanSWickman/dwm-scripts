@@ -7,9 +7,9 @@
 void SetUpdatesString(char* updatesString) {
   FILE* openFile = fopen("/home/jif/monitors/update_count", "r");
 
-  char numUpdates[3];
+  char numUpdates[6];
 
-  fgets(numUpdates, 3, openFile);
+  fgets(numUpdates, 5, openFile);
  
   if (numUpdates[strlen(numUpdates) - 1] == '\n') {
     numUpdates[strlen(numUpdates) - 1] = '\0';
