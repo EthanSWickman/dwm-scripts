@@ -10,6 +10,7 @@
 #include "updates_status.h"
 #include "cpu_temp_status.h"
 #include "memory_usage_status.h"
+#include "network_usage_status.h"
 
 #define STATUS_MAX_SIZE 121
 
@@ -45,6 +46,10 @@ int main() {
   char cpuTempString[3];  
   /* 3 characters maximum */
   unsigned int memoryUsageInt;
+  /* up to 4 characters */
+  unsigned int networkUpInt;
+  /* up to 4 characters */
+  unsigned int networkDownInt;
   
   int counter = 0;
 
@@ -56,6 +61,10 @@ int main() {
     SetCpuTempString(cpuTempString);
 
     SetMemoryUsageInt(&memoryUsageInt);
+
+    SetNetworkUpInt(&networkUpInt);
+
+    SetNetworkDownInt(&networkDownInt);
 
     if (counter % 3600 == 0) {
       SetUpdatesString(updatesString);
