@@ -9,6 +9,7 @@
 #include "time_status.h"
 #include "updates_status.h"
 #include "cpu_temp_status.h"
+#include "memory_usage_status.h"
 
 #define STATUS_MAX_SIZE 121
 
@@ -42,7 +43,9 @@ int main() {
   char batteryString[5];
   /* 2 characters always */
   char cpuTempString[3];  
-
+  /* 3 characters maximum */
+  unsigned int memoryUsageInt;
+  
   int counter = 0;
 
   while(1) {
@@ -51,6 +54,8 @@ int main() {
     SetTimeString(timeString);
 
     SetCpuTempString(cpuTempString);
+
+    SetMemoryUsageInt(&memoryUsageInt);
 
     if (counter % 3600 == 0) {
       SetUpdatesString(updatesString);
@@ -66,7 +71,7 @@ int main() {
    /*  printf("%ld is the maximum status size\n", strlen(maxSizeStatus));
     printf("%s\n", maxSizeStatus); */
     /* memory, cpu use/temp, down/up, package upgrades, date/time, volume */
-    sprintf(statusString, "| 🖴 000%% | 🖥️ 000%% 🌡️ %s° | ⬇️ 0000 ⬆️ 0000 | 🔔 %s | %s | 🔊 000%% | 🔋 %s", cpuTempString, updatesString, timeString, batteryString);
+    sprintf(statusString, "| 🖴 %u%% | 🖥️ 000%% 🌡️ %s° | ⬇️ 0000 ⬆️ 0000 | 🔔 %s | %s | 🔊 000%% | 🔋 %s", memoryUsageInt, cpuTempString, updatesString, timeString, batteryString);
 
     SetStatus(statusString);
 

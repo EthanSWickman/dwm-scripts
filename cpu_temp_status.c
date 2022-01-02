@@ -10,8 +10,6 @@ void SetCpuTempString(char* cpuTempString) {
 
   fgets(temp, 3, openFile);
 
-  printf("%s\n", temp);
-
   fclose(openFile);
 
   strcpy(cpuTempString, temp);
