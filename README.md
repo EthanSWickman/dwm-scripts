@@ -26,6 +26,9 @@
 
 <li>migrate monitors from systemd timers to native jifbar by using asynchronous system calls to update monitor files</li>
 <li>test speed of counter array instead of modulus update management, and change to it if it is faster (it will be)</li>
+<li>come up with universal solution for network usage status (detect the in use network card(s) and monitor them instead of just my Thinkpad card wlan0)</li>
+<li>merge implementation files for cpu statuses</li>
+<li>make network speed into string so we can get download speed in variable units instead of only in megaBytes</li>
 
 </ul>
 
