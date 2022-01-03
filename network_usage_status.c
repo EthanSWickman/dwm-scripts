@@ -17,8 +17,6 @@ void SetNetworkUpInt(unsigned int* networkUpStatusInt) {
 
   prevUpBytes = currBytes;
 
-  printf("kilobytes upload this second: %u\n", *networkUpStatusInt);
-
   fclose(openFile);
 }
 
@@ -32,8 +30,6 @@ void SetNetworkDownInt(unsigned int* networkDownStatusInt) {
   *networkDownStatusInt = (currBytes - prevDownBytes)/1000000;
 
   prevDownBytes = currBytes;
-
-  printf("kilobytes download this second: %u\n", *networkDownStatusInt);
 
   fclose(openFile);
 }

@@ -9,6 +9,7 @@
 #include "time_status.h"
 #include "updates_status.h"
 #include "cpu_temp_status.h"
+#include "cpu_usage_status.h"
 #include "memory_usage_status.h"
 #include "network_usage_status.h"
 
@@ -36,6 +37,8 @@ void UpdateStatusString(char statusString[STATUS_MAX_SIZE], char* sourceString, 
 int main() { 
   dpy = XOpenDisplay(NULL);
 
+  DetermineHertz();
+
   /* 15 characters always */
   char timeString[16];
   /* 5 characters maximum */
@@ -50,6 +53,8 @@ int main() {
   unsigned int networkUpInt;
   /* up to 4 characters */
   unsigned int networkDownInt;
+  /* up to 3 characters */
+  unsigned int cpuUsageInt;
   
   int counter = 0;
 
@@ -66,6 +71,8 @@ int main() {
 
     SetNetworkDownInt(&networkDownInt);
 
+    SetCpuUsageInt(&cpuUsageInt);
+
     if (counter % 3600 == 0) {
       SetUpdatesString(updatesString);
     }
@@ -80,7 +87,7 @@ int main() {
    /*  printf("%ld is the maximum status size\n", strlen(maxSizeStatus));
     printf("%s\n", maxSizeStatus); */
     /* memory, cpu use/temp, down/up, package upgrades, date/time, volume */
-    sprintf(statusString, "| 🖴 %u%% | 🖥️ 000%% 🌡️ %s° | ⬇️ 0000 ⬆️ 0000 | 🔔 %s | %s | 🔊 000%% | 🔋 %s", memoryUsageInt, cpuTempString, updatesString, timeString, batteryString);
+    sprintf(statusString, "| 🖴 %u%% | 🖥️ %u%% 🌡️ %s° | ⬇️ 0000 ⬆️ 0000 | 🔔 %s | %s | 🔊 000%% | 🔋 %s", memoryUsageInt, cpuUsageInt, cpuTempString, updatesString, timeString, batteryString);
 
     SetStatus(statusString);
 
