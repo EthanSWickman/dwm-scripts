@@ -17,11 +17,8 @@ void SetNetworkUpString(char* networkUpStatusString) {
 
   unsigned long long newBits = (currBytes - prevUpBytes) * 8;
 
-  printf("current upload bytes: %llu\n", currBytes-prevUpBytes);
-
   prevUpBytes = currBytes;
 
-  int coefficient;
   char networkUpString[10];
 
   if (newBits < 1000) {
@@ -40,16 +37,33 @@ void SetNetworkUpString(char* networkUpStatusString) {
   strcpy(networkUpStatusString, networkUpString);
 }
 
-void SetNetworkDownInt(unsigned int* networkDownStatusInt) {
+void SetNetworkDownString(char* networkDownStatusString) {
   FILE* openFile = fopen("/sys/class/net/wlan0/statistics/rx_bytes", "r");
 
   unsigned long long currBytes;
   
   fscanf(openFile, "%llu", &currBytes);
 
-  printf("current download bytes: %llu\n", currBytes-prevDownBytes);
+  fclose(openFile);
+
+  unsigned long long newBits = (currBytes - prevDownBytes) * 8;
 
   prevDownBytes = currBytes;
 
-  fclose(openFile);
+  char networkDownString[10];
+
+  if (newBits < 1000) {
+    sprintf(networkDownString, "%llu b/s", newBits);
+  }
+  else if (newBits < 1000000) {
+    sprintf(networkDownString, "%llu kb/s", newBits / 1000);
+  }
+  else if (newBits < 1000000000) {
+    sprintf(networkDownString, "%llu mb/s", newBits / 1000000);
+  }
+  else {
+    sprintf(networkDownString, "%llu gb/s", newBits / 1000000000);
+  }
+
+  strcpy(networkDownStatusString, networkDownString);
 }

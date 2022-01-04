@@ -51,8 +51,8 @@ int main() {
   unsigned int memoryUsageInt;
   /* up to 9 characters */
   char networkUpString[10];
-  /* up to 4 characters */
-  unsigned int networkDownInt;
+  /* up to 9 characters */
+  char networkDownString[10];
   /* up to 3 characters */
   unsigned int cpuUsageInt;
   
@@ -69,7 +69,7 @@ int main() {
 
     SetNetworkUpString(networkUpString);
 
-    SetNetworkDownInt(&networkDownInt);
+    SetNetworkDownString(networkDownString);
 
     SetCpuUsageInt(&cpuUsageInt);
 
@@ -83,11 +83,10 @@ int main() {
 
     char statusString[STATUS_MAX_SIZE];
 
-    char* maxSizeStatus = "| 🖴 000% | 🖥️ 000% 🌡️ 00° | ⬇️ 0000 ⬆️ 0000 | 🔔 00000 | Fri 00/00 00:00 | 🔊 000% | 🔋 100%+";
+    char* maxSizeStatus = "| 🖴 000% | 🖥️ 000% 🌡️ 00° | ⬇️ 0000 kb/s ⬆️ 0000 kb/s | 🔔 00000 | Fri 00/00 00:00 | 🔋 100%+";
    /*  printf("%ld is the maximum status size\n", strlen(maxSizeStatus));
     printf("%s\n", maxSizeStatus); */
-    /* memory, cpu use/temp, down/up, package upgrades, date/time, volume */
-    sprintf(statusString, "| 🖴 %u%% | 🖥️ %u%% 🌡️ %s° | ⬇️ 0000 ⬆️ %s | 🔔 %s | %s | 🔊 000%% | 🔋 %s", memoryUsageInt, cpuUsageInt, cpuTempString, networkUpString, updatesString, timeString, batteryString);
+    sprintf(statusString, "| 🖴 %u%% | 🖥️ %u%% 🌡️ %s° | ⬇️ %s ⬆️ %s | 🔔 %s | %s | 🔋 %s", memoryUsageInt, cpuUsageInt, cpuTempString, networkDownString, networkUpString, updatesString, timeString, batteryString);
 
     SetStatus(statusString);
 

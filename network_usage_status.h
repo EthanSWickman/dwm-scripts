@@ -3,7 +3,7 @@
 
 void SetNetworkUpString(char*);
 
-void SetNetworkDownInt(unsigned int*);
+void SetNetworkDownString(char*);
 
 #endif
 
