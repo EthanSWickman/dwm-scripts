@@ -13,7 +13,7 @@
 #include "memory_usage_status.h"
 #include "network_usage_status.h"
 
-#define STATUS_MAX_SIZE 200
+#define STATUS_MAX_SIZE 120 
 
 Display* dpy;
 
@@ -40,8 +40,6 @@ int main() {
   InitCpuTracker();
   InitNetworkTracker();
 
-  sleep(1);
-
   /* 15 characters always */
   char timeString[16];
   /* 5 characters maximum */
@@ -59,43 +57,47 @@ int main() {
   /* up to 3 characters */
   unsigned int cpuUsageInt;
   
-  int counter = 0;
+  int fiveSecondCounter = 0;
+  int oneMinuteCounter = 0;
+  int fiveMinuteCounter = 0;
 
   while(1) {
-    /* Update strings if necessary */ 
-
+    sleep(1);
+    
+    /* every second */
     SetTimeString(timeString);
-
     SetCpuTempString(cpuTempString);
-
-    SetMemoryUsageInt(&memoryUsageInt);
-
-    SetNetworkUpString(networkUpString);
-
-    SetNetworkDownString(networkDownString);
-
     SetCpuUsageInt(&cpuUsageInt);
-
-    if (counter % 3600 == 0) {
-      SetUpdatesString(updatesString);
+    SetNetworkUpString(networkUpString);
+    SetNetworkDownString(networkDownString);
+    /* every five seconds */
+    if (fiveSecondCounter > 5) {
+      SetMemoryUsageInt(&memoryUsageInt);
+      fiveSecondCounter = 0;
     }
-
-    if (counter % 10 == 0) { 
+    /* every minute */
+    if (oneMinuteCounter > 60) {
       SetBatteryString(batteryString);
+      oneMinuteCounter = 0;
+    }
+    /* every five minutes */
+    if (fiveMinuteCounter > 300) {
+      SetUpdatesString(updatesString);
+      fiveMinuteCounter = 0;
     }
 
     char statusString[STATUS_MAX_SIZE];
 
     char* maxSizeStatus = "| 🖴 000% | 🖥️ 000% 🌡️ 00° | ⬇️ 0000 kb/s ⬆️ 0000 kb/s | 🔔 00000 | Fri 00/00 00:00 | 🔋 100%+";
-   /*  printf("%ld is the maximum status size\n", strlen(maxSizeStatus));
-    printf("%s\n", maxSizeStatus); */
+    printf("%ld is the maximum status size\n", strlen(maxSizeStatus));
+    printf("%s\n", maxSizeStatus);
     sprintf(statusString, "| 🖴 %u%% | 🖥️ %u%% 🌡️ %s° | ⬇️ %s ⬆️ %s | 🔔 %s | %s | 🔋 %s", memoryUsageInt, cpuUsageInt, cpuTempString, networkDownString, networkUpString, updatesString, timeString, batteryString);
 
     SetStatus(statusString);
 
-    counter++;
-
-    sleep(1);
+    fiveSecondCounter++;
+    oneMinuteCounter++;
+    fiveMinuteCounter++;
   }
 
   XCloseDisplay(dpy);
