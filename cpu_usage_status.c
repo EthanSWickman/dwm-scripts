@@ -15,7 +15,6 @@ void DetermineHertz() {
   numCpus = sysconf(_SC_NPROCESSORS_ONLN);
 }
 
-
 void SetCpuUsageInt(unsigned int* cpuUsageInt) {
   FILE* openFile = fopen("/proc/stat", "r"); 
 

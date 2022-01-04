@@ -13,7 +13,7 @@
 #include "memory_usage_status.h"
 #include "network_usage_status.h"
 
-#define STATUS_MAX_SIZE 121
+#define STATUS_MAX_SIZE 200
 
 Display* dpy;
 
@@ -49,8 +49,8 @@ int main() {
   char cpuTempString[3];  
   /* 3 characters maximum */
   unsigned int memoryUsageInt;
-  /* up to 4 characters */
-  unsigned int networkUpInt;
+  /* up to 9 characters */
+  char networkUpString[10];
   /* up to 4 characters */
   unsigned int networkDownInt;
   /* up to 3 characters */
@@ -67,7 +67,7 @@ int main() {
 
     SetMemoryUsageInt(&memoryUsageInt);
 
-    SetNetworkUpInt(&networkUpInt);
+    SetNetworkUpString(networkUpString);
 
     SetNetworkDownInt(&networkDownInt);
 
@@ -87,7 +87,7 @@ int main() {
    /*  printf("%ld is the maximum status size\n", strlen(maxSizeStatus));
     printf("%s\n", maxSizeStatus); */
     /* memory, cpu use/temp, down/up, package upgrades, date/time, volume */
-    sprintf(statusString, "| 🖴 %u%% | 🖥️ %u%% 🌡️ %s° | ⬇️ 0000 ⬆️ 0000 | 🔔 %s | %s | 🔊 000%% | 🔋 %s", memoryUsageInt, cpuUsageInt, cpuTempString, updatesString, timeString, batteryString);
+    sprintf(statusString, "| 🖴 %u%% | 🖥️ %u%% 🌡️ %s° | ⬇️ 0000 ⬆️ %s | 🔔 %s | %s | 🔊 000%% | 🔋 %s", memoryUsageInt, cpuUsageInt, cpuTempString, networkUpString, updatesString, timeString, batteryString);
 
     SetStatus(statusString);
 
