@@ -37,7 +37,10 @@ void UpdateStatusString(char statusString[STATUS_MAX_SIZE], char* sourceString, 
 int main() { 
   dpy = XOpenDisplay(NULL);
 
-  DetermineHertz();
+  InitCpuTracker();
+  InitNetworkTracker();
+
+  sleep(1);
 
   /* 15 characters always */
   char timeString[16];

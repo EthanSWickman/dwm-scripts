@@ -3,8 +3,22 @@
 
 #include "network_usage_status.h"
 
-unsigned long long prevUpBytes = 0;
-unsigned long long prevDownBytes = 0;
+unsigned long long prevUpBytes;
+unsigned long long prevDownBytes;
+
+void InitNetworkTracker() {
+  FILE* openFile = fopen("/sys/class/net/wlan0/statistics/tx_bytes", "r");
+
+  fscanf(openFile, "%llu", &prevUpBytes);
+
+  fclose(openFile);
+
+  openFile = fopen("/sys/class/net/wlan0/statistics/rx_bytes", "r");
+
+  fscanf(openFile, "%llu", &prevDownBytes);
+
+  fclose(openFile);
+}
 
 void SetNetworkUpString(char* networkUpStatusString) {
   FILE* openFile = fopen("/sys/class/net/wlan0/statistics/tx_bytes", "r");

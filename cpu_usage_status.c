@@ -8,9 +8,15 @@
 long int clockHertz; 
 long int numCpus;
 
-unsigned long long prevDowntime = 0;
+unsigned long long prevDowntime;
 
-void DetermineHertz() {
+void InitCpuTracker() {
+  FILE* openFile = fopen("/proc/stat", "r");
+
+  fscanf(openFile, "%*s %*llu %*llu %*llu %llu", &prevDowntime);
+
+  fclose(openFile);
+
   clockHertz = sysconf(_SC_CLK_TCK);
   numCpus = sysconf(_SC_NPROCESSORS_ONLN);
 }
