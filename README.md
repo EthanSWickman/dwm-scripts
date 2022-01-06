@@ -24,6 +24,9 @@
 <h1>Todo</h1>
 <ul>
 
+<li>explore stopping bar while dwm is fullscreening</li>
+<li>solve seg fault caused by network status checker after a while</li>
+<li>double check the status bar for throughput speed units, I might have messed that one up</li>
 <li>work on makefile to allow for other computers to use the jifbar</li>
 <li>migrate monitors from systemd timers to native jifbar by using asynchronous system calls to update monitor files, right now there is a bug with the checkupdates timer script not always working</li>
 <li>come up with universal solution for network usage status (detect the in use network card(s) and monitor them instead of just my Thinkpad card wlan0)</li>
