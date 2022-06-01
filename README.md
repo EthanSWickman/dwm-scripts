@@ -1,4 +1,4 @@
-<p>jifbar is a Simple Status Bar Used with DWM on Arch Linux Systems</p>
+<p>jifbar is a Simple Status Bar Used with DWM on Arch Linux Installs</p>
 
 <h1>Dependencies</h1>
 <ul>
